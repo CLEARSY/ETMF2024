@@ -1,0 +1,27 @@
+IMPLEMENTATION BLADE2_i
+REFINES BLADE
+OPERATIONS   
+    pos <-- estimate (s1, s2, s3) =
+    IF s1 = Left THEN
+        IF s2 = Right or s3 = Right
+        THEN pos := Unknown ELSE pos := Left
+        END
+    ELSIF s1 = Right THEN
+        IF s2 = Left or s3 = Left 
+        THEN pos := Unknown ELSE pos := Right
+        END
+    ELSE
+        IF s2 = Left
+        THEN
+            IF s3 = Right THEN pos := Unknown
+            ELSE pos := s2
+            END
+        ELSIF s2 = Right
+        THEN
+            IF s3 = Left THEN pos := Unknown
+            ELSE pos := s2 END
+        ELSE
+            pos := s3
+        END
+    END
+ END

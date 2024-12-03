@@ -1,0 +1,37 @@
+IMPLEMENTATION BLADE_i
+REFINES BLADE
+LOCAL_OPERATIONS
+    res <-- has_pos (pos, s1, s2, s3) =
+    PRE
+        pos : POSITION &
+        s1 : POSITION &
+        s2 : POSITION &
+        s3 : POSITION
+    THEN
+        res := bool (pos : {s1, s2, s3})
+    END
+OPERATIONS
+    res <-- has_pos (pos, s1, s2, s3) =
+    BEGIN
+        res := bool (s1 = pos or s2 = pos or s3 = pos)
+    END
+    ;
+    pos <-- estimate (s1, s2, s3) =
+    VAR
+        has_left, has_right
+    IN
+        has_left <-- has_pos (Left, s1, s2, s3);
+        has_right <-- has_pos (Right, s1, s2, s3);
+        IF
+            has_left = TRUE & has_right = FALSE
+        THEN
+            pos := Left
+        ELSIF
+            has_left = FALSE & has_right = TRUE
+        THEN
+            pos := Right
+        ELSE
+            pos := Unknown
+        END
+    END
+ END
